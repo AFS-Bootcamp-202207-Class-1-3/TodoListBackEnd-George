@@ -26,4 +26,8 @@ public class TodoService {
         oldTodo.updateTodo(updateTodo);
         return jpaTodoRepository.save(oldTodo);
     }
+
+    public void deleteTodo(Integer id) {
+        jpaTodoRepository.deleteById(id);
+    }
 }
