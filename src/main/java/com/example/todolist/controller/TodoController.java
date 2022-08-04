@@ -19,10 +19,12 @@ public class TodoController {
     private TodoService todoService;
     @Autowired
     private TodoMapper todoMapper;
+
     @GetMapping
     public List<TodoResponse> getAllTodos() {
         return todoMapper.convertToResponses(todoService.findAllTodos());
     }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TodoResponse addTodo(@RequestBody TodoRequest request) {

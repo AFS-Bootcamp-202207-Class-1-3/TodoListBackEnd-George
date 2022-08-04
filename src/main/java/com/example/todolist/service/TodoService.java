@@ -14,15 +14,17 @@ import java.util.List;
 public class TodoService {
     @Autowired
     private JpaTodoRepository jpaTodoRepository;
+
     public List<Todo> findAllTodos() {
         return jpaTodoRepository.findAll();
     }
+
     public Todo addTodo(Todo todo) {
         return jpaTodoRepository.save(todo);
     }
 
     public Todo updateTodo(Integer id, Todo updateTodo) {
-        Todo oldTodo =  jpaTodoRepository.findById(id).orElseThrow(NotFoundException::new);
+        Todo oldTodo = jpaTodoRepository.findById(id).orElseThrow(NotFoundException::new);
         oldTodo.updateTodo(updateTodo);
         return jpaTodoRepository.save(oldTodo);
     }

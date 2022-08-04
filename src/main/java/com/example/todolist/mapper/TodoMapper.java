@@ -19,7 +19,6 @@ public class TodoMapper {
 
     public TodoResponse convertToResponse(Todo todo) {
         TodoResponse response = new TodoResponse();
-        response.setDone(todo.isDone());
         BeanUtils.copyProperties(todo, response);
         return response;
     }
@@ -28,7 +27,6 @@ public class TodoMapper {
         List<TodoResponse> responses = new ArrayList<>();
         for (Todo todo : todoEntities) {
             TodoResponse response = new TodoResponse();
-            response.setDone(todo.isDone());
             BeanUtils.copyProperties(todo, response);
             responses.add(response);
         }

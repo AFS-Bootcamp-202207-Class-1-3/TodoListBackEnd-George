@@ -38,7 +38,7 @@ public class Todo {
         this.content = content;
     }
 
-    public Boolean isDone() {
+    public Boolean getDone() {
         return done;
     }
 
