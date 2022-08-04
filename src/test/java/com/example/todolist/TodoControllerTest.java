@@ -3,7 +3,6 @@ package com.example.todolist;
 import com.example.todolist.dto.TodoRequest;
 import com.example.todolist.entity.Todo;
 import com.example.todolist.repository.JpaTodoRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
