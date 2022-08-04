@@ -1,12 +1,16 @@
 package com.example.todolist;
 
+import com.example.todolist.dto.TodoRequest;
 import com.example.todolist.entity.Todo;
 import com.example.todolist.repository.JpaTodoRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,6 +33,7 @@ public class TodoControllerTest {
     void cleanDB() {
         jpaTodoRepository.deleteAll();
     }
+
     @Test
     void should_return_all_todos_when_call_get_all_todos_api() throws Exception {
         //given
@@ -49,5 +54,23 @@ public class TodoControllerTest {
         assertThat(jpaTodoRepository.findAll().get(0).getContent(), equalTo("first todo"));
         assertThat(jpaTodoRepository.findAll().get(1).getContent(), equalTo("second todo"));
         assertThat(jpaTodoRepository.findAll().get(2).getContent(), equalTo("third todo"));
+    }
+
+    @Test
+    void should_save_todo_when_call_post_todos_api_given_new_todo() throws Exception {
+        //given
+        TodoRequest request = new TodoRequest();
+        request.setContent("first todo request");
+        String requestString = new ObjectMapper().writeValueAsString(request);
+
+        //when & then
+        client.perform(MockMvcRequestBuilders.post("/todos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestString))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+
+        //should
+        assertThat(jpaTodoRepository.findAll().size(), equalTo(1));
+        assertThat(jpaTodoRepository.findAll().get(0).getContent(), equalTo("first todo request"));
     }
 }
