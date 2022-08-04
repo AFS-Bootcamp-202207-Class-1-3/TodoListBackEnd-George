@@ -73,4 +73,25 @@ public class TodoControllerTest {
         assertThat(jpaTodoRepository.findAll().size(), equalTo(1));
         assertThat(jpaTodoRepository.findAll().get(0).getContent(), equalTo("first todo request"));
     }
+
+    @Test
+    void should_return_updated_done_todo_when_call_put_api_given_todo() throws Exception {
+        //given
+        Todo todo = jpaTodoRepository.save(new Todo(1, "first todo", false));
+        TodoRequest request = new TodoRequest();
+        request.setDone(true);
+        String requestString = new ObjectMapper().writeValueAsString(request);
+
+        //when & then
+        client.perform(MockMvcRequestBuilders.put("/todos/{id}", todo.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestString))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("first todo"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.done").value(true));
+
+        assertThat(jpaTodoRepository.findAll().size(), equalTo(1));
+        assertThat(jpaTodoRepository.findAll().get(0).getContent(), equalTo("first todo"));
+        assertThat(jpaTodoRepository.findAll().get(0).getDone(), equalTo(true));
+    }
 }
