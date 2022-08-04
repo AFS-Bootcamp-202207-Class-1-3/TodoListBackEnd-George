@@ -11,12 +11,12 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
-    private boolean done;
+    private Boolean done;
 
     public Todo() {
     }
 
-    public Todo(Integer id, String content, boolean done) {
+    public Todo(Integer id, String content, Boolean done) {
         this.id = id;
         this.content = content;
         this.done = done;
@@ -38,15 +38,20 @@ public class Todo {
         this.content = content;
     }
 
-    public boolean isDone() {
+    public Boolean isDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(Boolean done) {
         this.done = done;
     }
 
-    public void updateDone(Todo updateTodo) {
-        done = updateTodo.done;
+    public void updateTodo(Todo updateTodo) {
+        if (updateTodo.content != null) {
+            content = updateTodo.content;
+        } else {
+            done = updateTodo.done;
+        }
     }
+
 }

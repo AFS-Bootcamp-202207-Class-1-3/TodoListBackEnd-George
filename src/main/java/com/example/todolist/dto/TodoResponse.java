@@ -3,15 +3,15 @@ package com.example.todolist.dto;
 public class TodoResponse {
     private Integer id;
     private String content;
-    private boolean done;
+    private Boolean done;
 
-    public TodoResponse(Integer id, String content, boolean done) {
+    public TodoResponse() {
+    }
+
+    public TodoResponse(Integer id, String content, Boolean done) {
         this.id = id;
         this.content = content;
         this.done = done;
-    }
-
-    public TodoResponse() {
     }
 
     public Integer getId() {
@@ -30,11 +30,11 @@ public class TodoResponse {
         this.content = content;
     }
 
-    public boolean isDone() {
+    public Boolean getDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(Boolean done) {
         this.done = done;
     }
 }
