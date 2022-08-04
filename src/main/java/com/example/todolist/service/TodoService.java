@@ -3,6 +3,7 @@ package com.example.todolist.service;
 
 import com.example.todolist.dto.TodoResponse;
 import com.example.todolist.entity.Todo;
+import com.example.todolist.exception.NotFoundException;
 import com.example.todolist.repository.JpaTodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,11 @@ public class TodoService {
     }
     public Todo addTodo(Todo todo) {
         return jpaTodoRepository.save(todo);
+    }
+
+    public Todo updateDone(Integer id, Todo updateTodo) {
+        Todo oldTodo =  jpaTodoRepository.findById(id).orElseThrow(NotFoundException::new);
+        oldTodo.updateDone(updateTodo);
+        return oldTodo;
     }
 }
