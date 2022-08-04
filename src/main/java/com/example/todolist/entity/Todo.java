@@ -6,17 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class TodoEntity {
+public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
     private boolean done;
 
-    public TodoEntity() {
+    public Todo() {
     }
 
-    public TodoEntity(Integer id, String content, boolean done) {
+    public Todo(Integer id, String content, boolean done) {
         this.id = id;
         this.content = content;
         this.done = done;
