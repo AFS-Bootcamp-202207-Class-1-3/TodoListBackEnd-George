@@ -1,10 +1,10 @@
 package com.example.todolist.exception;
 
-public class NotFoundException extends RuntimeException {
-    private static final String NOT_FOUND_TODO_MESSAGE = "Not Found Such Todo";
+import java.util.Locale;
 
-    @Override
-    public String getMessage() {
-        return NOT_FOUND_TODO_MESSAGE;
+public class NotFoundException extends RuntimeException {
+
+    public NotFoundException(String className) {
+        super("Not Found: " + className.toLowerCase(Locale.ROOT));
     }
 }

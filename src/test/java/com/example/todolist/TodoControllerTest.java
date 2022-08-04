@@ -90,6 +90,7 @@ public class TodoControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("first todo"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.done").value(true));
 
+        //should
         assertThat(jpaTodoRepository.findAll().size(), equalTo(1));
         assertThat(jpaTodoRepository.findAll().get(0).getContent(), equalTo("first todo"));
         assertThat(jpaTodoRepository.findAll().get(0).getDone(), equalTo(true));
@@ -111,8 +112,23 @@ public class TodoControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content").value("update content"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.done").value(false));
 
+        //should
         assertThat(jpaTodoRepository.findAll().size(), equalTo(1));
         assertThat(jpaTodoRepository.findAll().get(0).getContent(), equalTo("update content"));
         assertThat(jpaTodoRepository.findAll().get(0).getDone(), equalTo(false));
     }
+
+    @Test
+    void should_delete_todo_when_call_delete_api_given_id() throws Exception {
+        //given
+        Todo todo = jpaTodoRepository.save(new Todo(1, "first todo", false));
+
+        //when & then
+        client.perform(MockMvcRequestBuilders.delete("/todos/{id}", todo.getId()))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        //should
+        assertThat(jpaTodoRepository.findAll().size(), equalTo(0));
+    }
+
 }

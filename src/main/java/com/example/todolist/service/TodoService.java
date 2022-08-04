@@ -24,7 +24,8 @@ public class TodoService {
     }
 
     public Todo updateTodo(Integer id, Todo updateTodo) {
-        Todo oldTodo = jpaTodoRepository.findById(id).orElseThrow(NotFoundException::new);
+        Todo oldTodo = jpaTodoRepository.findById(id).orElseThrow(()
+                -> new NotFoundException(Todo.class.getSimpleName()));
         oldTodo.updateTodo(updateTodo);
         return jpaTodoRepository.save(oldTodo);
     }
